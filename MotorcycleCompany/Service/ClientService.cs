@@ -1,8 +1,7 @@
-﻿using Contracts;
-using Entities.Models;
+﻿using AutoMapper;
+using Contracts;
 using Service.Contracts;
-using Shared.DataTransferObject;
-using Shared.DataTransferObject;
+using Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +14,26 @@ namespace Service
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _loggerManager;
+        private readonly IMapper _mapper;
 
-        public ClientService(IRepositoryManager repository, ILoggerManager loggerManager)
+        public ClientService(IRepositoryManager repository, ILoggerManager loggerManager, IMapper mapper)
         {
-            _repository = repository;
-            _loggerManager = loggerManager;
+            this._repository = repository;
+            this._loggerManager = loggerManager;
+            this._mapper = mapper;  
         }
 
-        public IEnumerable<Client> GetAllClients(bool trackChanges)
+        public IEnumerable<ClientDto> GetAllClients(bool trackChanges)
         {
-            try
-            {
-                var clients = _repository.Client.GetAllClients(trackChanges);
-                var ClientDto = clients.Select(a => new ClientDto(a.Name, a.FirstSurname, a.Address, a.PhoneNumber)).ToList();
-                return clients;
-            }
-            catch (Exception ex)
-            {
-                _loggerManager.LogError($"something went wrong in the {nameof(GetAllClients)} service method {ex}");
-                throw;
-            }
+
+
+            var client = _repository.Client.GetAllClients(trackChanges);
+
+            var clientDto = _mapper.Map<IEnumerable<ClientDto>>(client);
+
+            return clientDto;
+
+
         }
     }
 }

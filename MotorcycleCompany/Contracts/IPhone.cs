@@ -10,6 +10,5 @@ namespace Contracts
     public interface IPhone
     {
         IEnumerable<Phone> GetAllPhones(bool trackChanges);
-
     }
 }

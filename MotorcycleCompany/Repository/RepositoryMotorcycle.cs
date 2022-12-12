@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class RepositoryMotorcycle : RepositoryBase<RepositoryMotorcycle>, IMotorcycle
+    public class RepositoryMotorcycle : RepositoryBase<Motorcycle>, IMotorcycle
     {
         public RepositoryMotorcycle(RepositoryContext context) : base(context)
         {
         }
 
-        public IEnumerable<Motorcycle> GetAllMotorcycles(bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Motorcycle> GetAllMotorcycles(bool trackChanges) =>
+        FindAll(trackChanges)
+        .OrderBy(a => a.Mat)
+        .ToList();
     }
 }

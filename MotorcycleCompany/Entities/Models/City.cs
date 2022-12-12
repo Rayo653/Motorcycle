@@ -10,7 +10,6 @@ namespace Entities.Models
 {
     public class City
     {
-
         [Key]
         [Column("CityId")]
         public int CityId { get; set; }
@@ -28,8 +27,7 @@ namespace Entities.Models
 
         [Required(ErrorMessage = "Habitants name is required field")]
         [MaxLength(60, ErrorMessage = "Maximun length for the Name is 60 characteres")]
-        public string Residents { get; set; }
-
+        public string Residents { get; set; } 
 
         public ICollection<Garage> Garage { get; set; }
 

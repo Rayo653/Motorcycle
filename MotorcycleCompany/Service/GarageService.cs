@@ -1,8 +1,7 @@
-﻿using Contracts;
-using Entities.Models;
+﻿using AutoMapper;
+using Contracts;
 using Service.Contracts;
-using Shared.DataTransferObject;
-
+using Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,31 +12,29 @@ namespace Service
 {
     internal sealed class GarageService : IGarageService
     {
-
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _loggerManager;
-
-        public GarageService(IRepositoryManager repository, ILoggerManager loggerManager)
+        private readonly IMapper _mapper;
+        public GarageService(IRepositoryManager repository, ILoggerManager loggerManager, IMapper mapper)
         {
-            _repository = repository;
-            _loggerManager = loggerManager;
+            this._repository = repository;
+            this._loggerManager = loggerManager;
+            this._mapper = mapper;
         }
 
-        public IEnumerable<Garage> GetAllGarages(bool trackChanges)
+        public IEnumerable<GarageDto> GetAllGarages(bool trackChanges)
         {
-            try
-            {
-                var garages = _repository.Garage.GetAllGarages(trackChanges);
-                var GarageDto = garages.Select(a => new GarageDto(a.Name, a.Address)).ToList();
 
-                return garages;
-            }
-            catch (Exception ex)
-            {
-                _loggerManager.LogError($"something went wrong in the {nameof(GetAllGarages)} service method {ex}");
 
-                throw;
-            }
+            var garage = _repository.Garage.GetAllGarages(trackChanges);
+
+            var garageDto = _mapper.Map<IEnumerable<GarageDto>>(garage);
+
+            return garageDto;
+
+
         }
+
+
     }
 }

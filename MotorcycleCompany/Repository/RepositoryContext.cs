@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class RepositoryContext : DbContext 
+    public class RepositoryContext : DbContext
     {
         public RepositoryContext(DbContextOptions options)
-            : base(options)
+           : base(options)
         {
 
         }
@@ -22,35 +22,34 @@ namespace Repository
             modelBuilder.ApplyConfiguration(new AgencyConfiguration());
 
             modelBuilder.Entity<Garage>()
-                .HasKey("GarageId");
-
-            modelBuilder.Entity<Agency>()
-              .HasKey("AgencyId");
-
-            modelBuilder.Entity<City>()
-              .HasKey("CityId");
-
-            modelBuilder.Entity<Client>()
-              .HasKey("ClientId");
+          .HasKey("GarageId");
 
             modelBuilder.Entity<Motorcycle>()
-              .HasKey("MotorcycleId");
-
-            modelBuilder.Entity<Phone>()
-              .HasKey("PhoneId");
+          .HasKey("MotorcycleId");
 
             modelBuilder.Entity<Rent>()
-              .HasKey("RentId");
+          .HasKey("RentId");
+
+            modelBuilder.Entity<Phone>()
+          .HasKey("PhoneId");
+
+            modelBuilder.Entity<Client>()
+          .HasKey("ClientId");
+
+            modelBuilder.Entity<Agency>()
+          .HasKey("AgencyId");
+
+            modelBuilder.Entity<City>()
+          .HasKey("CityId");
         }
 
-        public DbSet<Garage> garages { get; set; }
-        public DbSet<Agency> agencies { get; set; }
-        public DbSet<City> cities { get; set; }
-        public DbSet<Motorcycle> motorcycles { get; set; }
-        public DbSet<Phone> phones { get; set; }
-        public DbSet<Rent> rents { get; set; }
-
-        public DbSet<Client> Clients { get; set; }
+        public DbSet<Garage> Garage { get; set; }
+        public DbSet<Motorcycle> Motorcycle { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<Rent> Rent { get; set; }
+        public DbSet<Agency> Agency { get; set; }
+        public DbSet<Client> Client { get; set; }
+        public DbSet<Phone> Phone { get; set; }
 
     }
 }

@@ -10,6 +10,5 @@ namespace Contracts
     public interface IRent
     {
         IEnumerable<Rent> GetAllRents(bool trackChanges);
-
     }
 }

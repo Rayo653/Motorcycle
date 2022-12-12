@@ -1,4 +1,4 @@
-﻿using Entities.Models;
+﻿using Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,6 @@ namespace Service.Contracts
 {
     public interface IRentService
     {
-        IEnumerable<Rent> GetAllRents(bool trackChanges);
-
+        IEnumerable<RentDto> GetAllRents(bool trackChanges);
     }
 }

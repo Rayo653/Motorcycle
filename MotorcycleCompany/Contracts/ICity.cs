@@ -10,6 +10,5 @@ namespace Contracts
     public interface ICity
     {
         IEnumerable<City> GetAllCities(bool trackChanges);
-
     }
 }

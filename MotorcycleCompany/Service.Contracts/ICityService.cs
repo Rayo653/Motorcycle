@@ -1,4 +1,4 @@
-﻿using Entities.Models;
+﻿using Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,6 @@ namespace Service.Contracts
 {
     public interface ICityService
     {
-        IEnumerable<City> GetAllCities(bool trackChanges);
-
+        IEnumerable<CityDto> GetAllCities(bool trackChanges);
     }
 }

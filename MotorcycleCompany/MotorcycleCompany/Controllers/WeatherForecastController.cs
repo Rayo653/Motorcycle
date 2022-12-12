@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
 using Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MotorcycleCompany.Controllers
 {
@@ -7,8 +7,6 @@ namespace MotorcycleCompany.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-       
-
         private ILoggerManager _logger;
 
         public WeatherForecastController(ILoggerManager logger)

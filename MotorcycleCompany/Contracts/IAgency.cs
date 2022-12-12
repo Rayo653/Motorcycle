@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts
 {
-    public interface IAgency
+    public interface IAgency 
     {
         IEnumerable<Agency> GetAllAgencies(bool trackChanges);
     }

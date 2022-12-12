@@ -10,6 +10,5 @@ namespace Contracts
     public interface IClient
     {
         IEnumerable<Client> GetAllClients(bool trackChanges);
-
     }
 }

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Contracts
 {
-   public interface IGarage
+    public interface IGarage
     {
         IEnumerable<Garage> GetAllGarages(bool trackChanges);
-
     }
 }

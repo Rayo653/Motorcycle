@@ -9,15 +9,12 @@ namespace Contracts
     public interface IRepositoryManager
     {
         IAgency Agency { get; }
-        IClient Client { get; }
-        IPhone Phone { get; }
+        IGarage Garage { get; }
         ICity City { get; }
         IRent Rent { get; }
-        IGarage Garage { get; }
+        IClient Client { get; }
         IMotorcycle Motorcycle { get; }
-
-
-        void save();
+        IPhone Phone { get; }
+        void Save();
     }
-
 }

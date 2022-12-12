@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Contracts;
+using Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Contracts;
-using Entities.Models;
+
 namespace Repository
 {
     public class RepositoryRent : RepositoryBase<Rent>, IRent
@@ -13,9 +14,9 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Rent> GetAllRents(bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Rent> GetAllRents(bool trackChanges) =>
+        FindAll(trackChanges)
+        .OrderBy(a => a.DateS)
+        .ToList();
     }
 }

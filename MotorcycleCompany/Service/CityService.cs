@@ -1,7 +1,7 @@
-﻿using Contracts;
-using Entities.Models;
+﻿using AutoMapper;
+using Contracts;
 using Service.Contracts;
-using Shared.DataTransferObject;
+using Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,33 +10,30 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    internal sealed class CityService: ICityService
+    internal sealed class CityService : ICityService
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _loggerManager;
+        private readonly IMapper _mapper;
 
-
-        public CityService(IRepositoryManager repository, ILoggerManager loggerManager)
+        public CityService(IRepositoryManager repository, ILoggerManager loggerManager,IMapper _mapper)
         {
-            _repository = repository;
-           _loggerManager = loggerManager;
+            this._repository = repository;
+            this._loggerManager = loggerManager;
+            this._mapper = _mapper;
         }
 
-
-        public IEnumerable<City> GetAllCities(bool trackChanges)
+        public IEnumerable<CityDto> GetAllCities(bool trackChanges)
         {
-            try
-            {
-                var cities = _repository.City.GetAllCities(trackChanges);
-                var CityDto = cities.Select(a => new CityDto(a.Name, a.Province, a.Residents)).ToList();
 
-                return cities;
-            }
-            catch (Exception ex)
-            {
-                _loggerManager.LogError($"something went wrong in the {nameof(GetAllCities)} service method {ex}");
-                throw;
-            }
+
+            var cities = _repository.City.GetAllCities(trackChanges);
+            
+            var citiesDto = _mapper.Map<IEnumerable<CityDto>>(cities);
+
+            return citiesDto;
+
+
         }
     }
 }

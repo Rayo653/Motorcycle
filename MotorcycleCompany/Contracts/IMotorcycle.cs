@@ -10,6 +10,5 @@ namespace Contracts
     public interface IMotorcycle
     {
         IEnumerable<Motorcycle> GetAllMotorcycles(bool trackChanges);
-
     }
 }

@@ -1,7 +1,7 @@
-﻿using Contracts;
-using Entities.Models;
+﻿using AutoMapper;
+using Contracts;
 using Service.Contracts;
-using Shared.DataTransferObject;
+using Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,32 +10,30 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    internal sealed class MotorcycleService: IMotorcycleService
+    internal sealed class MotorcycleService : IMotorcycleService
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _loggerManager;
+        private readonly IMapper _mapper;
 
-
-        public MotorcycleService(IRepositoryManager repository, ILoggerManager loggerManager)
+        public MotorcycleService(IRepositoryManager repository, ILoggerManager loggerManager, IMapper mapper)
         {
-            _repository = repository;
-            _loggerManager = loggerManager;
+            this._repository = repository;
+            this._loggerManager = loggerManager;
+            this._mapper = mapper;
         }
 
-        public IEnumerable<Motorcycle> GetAllMotorcycles(bool trackChanges)
+        public IEnumerable<MotorcycleDto> GetAllMotorcycles(bool trackChanges)
         {
-            try
-            {
-                var motorcycles = _repository.Motorcycle.GetAllMotorcycles(trackChanges);
-                var MotorcycleDto = motorcycles.Select(a => new MotorcycleDto(a.Mat, a.NumBast, a.Color, a.Brand, a.Model)).ToList();
-                return motorcycles;
-            }
-            catch (Exception ex)
-            {
-                _loggerManager.LogError($"something went wrong in the {nameof(GetAllMotorcycles)} service method {ex}");
 
-                throw;
-            }
+
+            var motrocycle = _repository.Motorcycle.GetAllMotorcycles(trackChanges);
+
+            var motrocycleDto = _mapper.Map<IEnumerable<MotorcycleDto>>(motrocycle);
+
+            return motrocycleDto;
+
+
         }
     }
 }

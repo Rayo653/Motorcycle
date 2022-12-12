@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +12,13 @@ namespace Entities.Models
     {
         [Key]
         [Column("PhoneId")]
-        public int PhoneId { get; set; }
+        public Guid PhoneId { get; set; }
 
-        [Key]
-        [MaxLength(60, ErrorMessage = "Maximun length for the Name is 60 characteres")]
-        public string NameAgency { get; set; }
+
+        [MaxLength(20, ErrorMessage = "Maximun length for the Name is 20 characteres")]
+        public string PhoneNumber { get; set; }
 
         
-        [MaxLength(20, ErrorMessage = "Maximun length for the Name is 20 characteres")]
-        public int PhoneNumber { get; set; }
 
     }
 }

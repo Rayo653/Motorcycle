@@ -17,19 +17,17 @@ namespace MotorcycleCompany.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-rc.2.22472.11")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Entities.Models.Agency", b =>
                 {
-                    b.Property<int>("AgencyId")
+                    b.Property<Guid>("AgencyId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("AgencyId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AgencyId"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -41,6 +39,9 @@ namespace MotorcycleCompany.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<int>("NameAgency")
+                        .HasColumnType("int");
+
                     b.Property<string>("Population")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -48,22 +49,24 @@ namespace MotorcycleCompany.Migrations
 
                     b.HasKey("AgencyId");
 
-                    b.ToTable("agencies");
+                    b.ToTable("Agency");
 
                     b.HasData(
                         new
                         {
-                            AgencyId = 1,
-                            Address = "calle del recuerdo",
-                            Name = "Agenciao1",
-                            Population = "Santa barbara"
+                            AgencyId = new Guid("68c08f84-b5e5-4157-a337-37280ee22f3d"),
+                            Address = "Calle del recuerdo",
+                            Name = "Agencia01",
+                            NameAgency = 0,
+                            Population = "Santa Barbara"
                         },
                         new
                         {
-                            AgencyId = 2,
-                            Address = "calle del suicidio",
-                            Name = "Agenciao2",
-                            Population = "Santana"
+                            AgencyId = new Guid("4bed0933-bd8e-4ca7-999b-e424da44893e"),
+                            Address = "Calle del futuro",
+                            Name = "Agencia02",
+                            NameAgency = 0,
+                            Population = "Santa Ana"
                         });
                 });
 
@@ -74,7 +77,7 @@ namespace MotorcycleCompany.Migrations
                         .HasColumnType("int")
                         .HasColumnName("CityId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"), 1L, 1);
 
                     b.Property<int>("CP")
                         .HasMaxLength(60)
@@ -97,7 +100,7 @@ namespace MotorcycleCompany.Migrations
 
                     b.HasKey("CityId");
 
-                    b.ToTable("cities");
+                    b.ToTable("City");
                 });
 
             modelBuilder.Entity("Entities.Models.Client", b =>
@@ -107,7 +110,7 @@ namespace MotorcycleCompany.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ClientId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -139,7 +142,7 @@ namespace MotorcycleCompany.Migrations
 
                     b.HasKey("ClientId");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Client");
                 });
 
             modelBuilder.Entity("Entities.Models.Garage", b =>
@@ -149,7 +152,7 @@ namespace MotorcycleCompany.Migrations
                         .HasColumnType("int")
                         .HasColumnName("GarageId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GarageId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GarageId"), 1L, 1);
 
                     b.Property<string>("Address")
                         .HasMaxLength(100)
@@ -175,7 +178,7 @@ namespace MotorcycleCompany.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("garages");
+                    b.ToTable("Garage");
                 });
 
             modelBuilder.Entity("Entities.Models.Motorcycle", b =>
@@ -185,7 +188,7 @@ namespace MotorcycleCompany.Migrations
                         .HasColumnType("int")
                         .HasColumnName("MotorcycleId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MotorcycleId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MotorcycleId"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -195,10 +198,13 @@ namespace MotorcycleCompany.Migrations
                     b.Property<int>("AgencyId")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("AgencyId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Brand")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("CP")
                         .HasMaxLength(20)
@@ -241,38 +247,33 @@ namespace MotorcycleCompany.Migrations
 
                     b.HasKey("MotorcycleId");
 
-                    b.HasIndex("AgencyId");
+                    b.HasIndex("AgencyId1");
 
                     b.HasIndex("GarageId");
 
-                    b.ToTable("motorcycles");
+                    b.ToTable("Motorcycle");
                 });
 
             modelBuilder.Entity("Entities.Models.Phone", b =>
                 {
-                    b.Property<int>("PhoneId")
+                    b.Property<Guid>("PhoneId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("PhoneId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhoneId"));
+                    b.Property<Guid?>("AgencyId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("AgencyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NameAgency")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<int>("PhoneNumber")
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("PhoneId");
 
                     b.HasIndex("AgencyId");
 
-                    b.ToTable("phones");
+                    b.ToTable("Phone");
                 });
 
             modelBuilder.Entity("Entities.Models.Rent", b =>
@@ -282,10 +283,10 @@ namespace MotorcycleCompany.Migrations
                         .HasColumnType("int")
                         .HasColumnName("RentId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RentId"), 1L, 1);
 
-                    b.Property<int?>("AgencyId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("AgencyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -294,11 +295,7 @@ namespace MotorcycleCompany.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<DateTime>("DateF")
-                        .HasMaxLength(20)
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateI")
+                    b.Property<DateTime>("DateE")
                         .HasMaxLength(20)
                         .HasColumnType("datetime2");
 
@@ -306,9 +303,9 @@ namespace MotorcycleCompany.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Mat")
+                    b.Property<DateTime>("DateS")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("MotorcycleId")
                         .HasColumnType("int");
@@ -316,6 +313,10 @@ namespace MotorcycleCompany.Migrations
                     b.Property<string>("NameAgency")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("NumberPlate")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Paid")
                         .IsRequired()
@@ -334,7 +335,7 @@ namespace MotorcycleCompany.Migrations
 
                     b.HasIndex("MotorcycleId");
 
-                    b.ToTable("rents");
+                    b.ToTable("Rent");
                 });
 
             modelBuilder.Entity("Entities.Models.Garage", b =>
@@ -351,8 +352,8 @@ namespace MotorcycleCompany.Migrations
             modelBuilder.Entity("Entities.Models.Motorcycle", b =>
                 {
                     b.HasOne("Entities.Models.Agency", "Agency")
-                        .WithMany("Motorcycles")
-                        .HasForeignKey("AgencyId")
+                        .WithMany("Motorcycle")
+                        .HasForeignKey("AgencyId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -399,7 +400,7 @@ namespace MotorcycleCompany.Migrations
 
             modelBuilder.Entity("Entities.Models.Agency", b =>
                 {
-                    b.Navigation("Motorcycles");
+                    b.Navigation("Motorcycle");
 
                     b.Navigation("Phones");
 
